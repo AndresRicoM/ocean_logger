@@ -5,9 +5,9 @@ import seaborn as sns; sns.set()  # for plot styling
 from matplotlib import gridspec
 from matplotlib import rc,rcParams
 
-test_file_name = 'charles_river.txt'
+test_file_name = 'deployment_holbox.txt'
 test_data_path = '/Users/AndresRico/Desktop/working/ocean_logger/data/'
-plot_title = 'River Intermitent Experimental Log'
+plot_title = 'Pool Experimental Log'
 
 # millis, ph, pressure, temperature, depth, altitude
 
@@ -25,14 +25,14 @@ print('Generating Data Visualization')
 raw_data[:,0] = raw_data[:,0] / 60000 #Modify Time Axis
 dot_size = 10
 
-input_data = raw_data
+input_data = raw_data[np.where(raw_data[:,0] > 3523)[0][0] : np.where(raw_data[:,0] < 3545)[0][-1] , :]
 #raw_data
 #raw_data[np.where(raw_data[:,0] > 3523)[0][0] : np.where(raw_data[:,0] < 3545)[0][-1] , :] #Pool
 #raw_data[np.where(raw_data[:,0] > 3303)[0][0] : np.where(raw_data[:,0] < 3309)[0][-1] , :] #Ocean1
 #raw_data[np.where(raw_data[:,0] > 4627)[0][0] : np.where(raw_data[:,0] < 4720)[0][-1] , :] #Full Ocean
 input_data[:,0] = input_data[:,0] - input_data[0,0]
 
-gs = gridspec.GridSpec(3,1)
+gs = gridspec.GridSpec(2,1)
 fig = plt.figure()
 fig.suptitle(plot_title, size=30)
 # activate latex text rendering
@@ -49,13 +49,13 @@ ax.set(xticklabels=[])
 plt.grid(color = 'gray', linestyle = '--', linewidth = 0.5)
 """
 
-
+"""
 ax = fig.add_subplot(gs[0])
 ax.plot(input_data[:,0], input_data[:,2], color='teal')
 ax.set_ylabel(r'\textbf{Temperature (C)}', size =14)
 ax.set(xticklabels=[])
 plt.grid(color = 'gray', linestyle = '--', linewidth = 0.5)
-
+"""
 
 """
 ax = fig.add_subplot(gs[2])
@@ -65,7 +65,7 @@ ax.set(xticklabels=[])
 """
 
 
-ax = fig.add_subplot(gs[1])
+ax = fig.add_subplot(gs[0])
 ax.plot(input_data[:,0], input_data[:,4], color='cadetblue')
 ax.set_ylabel(r'\textbf{Depth (m)}', size =14)
 ax.set(xticklabels=[])
@@ -80,7 +80,7 @@ ax.set(xticklabels=[])
 plt.grid(color = 'gray', linestyle = '--', linewidth = 0.5)
 """
 
-ax = fig.add_subplot(gs[2])
+ax = fig.add_subplot(gs[1])
 ax.plot(input_data[:,0], input_data[:,6], color='skyblue')
 ax.set_ylabel(r'\textbf{Light (raw)}', size =14)
 ax.set_xlabel(r'\textbf{Time (min)}', size =14)
